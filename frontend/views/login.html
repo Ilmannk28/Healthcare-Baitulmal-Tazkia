@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="../scss/style.css">
+    <link rel="stylesheet" href="../scss/custom.css">
+</head>
+
+<body>
+    <div class="container-fluid bg-primary w-100 vh-100 align-content-center ">
+        <div class="bg-white w-50 m-auto rounded-4 justify-content-center px-4 pt-5 pb-3">
+
+            <div class="text-center align-items-center mx-auto w-50 mb-3">
+                <img src="../assets/img/logo.png" class="w-25" alt="">
+            </div>
+
+            <h4 class="text-center fw-bold text-primary mb-3">
+                Selamat Datang!
+            </h4>
+
+            <form id="loginForm" method="POST">
+
+                <div class="mb-3">
+                    <label for="email" class="form-label small fw-bold">
+                        Email address
+                    </label>
+
+                    <input type="email" class="form-control form-control-sm" id="email" name="email"
+                        placeholder="Masukan email anda" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label small fw-bold">
+                        Password
+                    </label>
+
+                    <input type="password" class="form-control form-control-sm" id="password" name="password"
+                        placeholder="Masukan password anda" required>
+                </div>
+
+
+                <button type="submit" class="btn btn-primary w-100 mb-4">
+                    Login
+                </button>
+
+            </form>
+
+            <p class="text-center">
+                Belum memiliki akun?
+                <span class="fw-bold">
+                    <a href="register.html" class="text-decoration-none">
+                        Daftar
+                    </a>
+                </span>
+            </p>
+
+        </div>
+    </div>
+   <script src="/frontend/assets/js/auth/login.js"></script>
+</body>
+
+</html>

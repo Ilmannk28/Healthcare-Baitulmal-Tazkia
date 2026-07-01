@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard Admin | Tazkia Baitulmal</title>
+
+    <!-- Sama persis dengan layananKesehatan.html -->
+    <link rel="stylesheet" href="../../scss/style.css">
+    <link rel="stylesheet" href="../../scss/custom.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <style>
+        body { background-color: #f8f9fa; }
+
+        /* ── Sidebar — sama dengan statusPemesanan ── */
+        .sidebar {
+            background-color: #0d2f6b;
+            color: white;
+            min-height: calc(100vh - 72px);
+        }
+        .sidebar .nav-link {
+            color: white;
+            margin-bottom: 10px;
+        }
+        .sidebar .nav-link.active,
+        .sidebar .nav-link:hover {
+            background-color: #123d8d;
+            border-radius: 8px;
+        }
+
+        /* ── Metric cards ── */
+        .metric-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 1.1rem 1.25rem;
+            border: 1px solid #e3e8f0;
+            box-shadow: 0 1px 4px rgba(0,0,0,.05);
+        }
+        .mc-label { font-size: .78rem; color: #6c757d; margin-bottom: .3rem; }
+        .mc-value { font-size: 1.8rem; font-weight: 700; color: #0d2f6b; line-height: 1; }
+        .mc-icon  { font-size: 1.4rem; }
+        .mc-sub   { font-size: .78rem; margin-top: .35rem; color: #6c757d; }
+        .mc-sub .up   { color: #198754; }
+        .mc-sub .down { color: #dc3545; }
+
+        /* ── Chart cards ── */
+        .chart-card {
+            background: #fff;
+            border-radius: 12px;
+            border: 1px solid #e3e8f0;
+            box-shadow: 0 1px 4px rgba(0,0,0,.05);
+            padding: 1.25rem;
+            height: 100%;
+        }
+        .chart-card h6 {
+            font-size: .88rem; font-weight: 700;
+            color: #0d2f6b; margin-bottom: 1rem;
+        }
+
+        /* ── Table — sama dengan statusPemesanan ── */
+        .table thead th {
+            background-color: #0d2f6b;
+            color: white;
+            font-size: .82rem;
+            border: none;
+            padding: .65rem .85rem;
+        }
+        .table tbody td {
+            font-size: .85rem;
+            vertical-align: middle;
+            padding: .65rem .85rem;
+        }
+        .table tbody tr:hover { background: #f0f4ff; }
+
+        /* ── Status badges — identik dengan statusPemesanan ── */
+        .status-badge {
+            display: inline-block; padding: .25em .75em;
+            border-radius: 20px; font-size: .78rem; font-weight: 600;
+        }
+        .status-pending   { background: #fff3cd; color: #856404; }
+        .status-approved  { background: #d1e7dd; color: #155724; }
+        .status-rejected  { background: #f8d7da; color: #721c24; }
+        .status-completed { background: #cfe2ff; color: #084298; }
+
+        /* ── Status bar ── */
+        .stat-bar-wrap {
+            background: #eef0f5; border-radius: 4px;
+            height: 8px; flex: 1; overflow: hidden;
+        }
+        .stat-bar-fill { height: 100%; border-radius: 4px; }
+
+        /* ── Skeleton ── */
+        .skeleton {
+            background: linear-gradient(90deg,#e4e8f0 25%,#f0f3f8 50%,#e4e8f0 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.4s infinite;
+            border-radius: 12px;
+        }
+        @keyframes shimmer {
+            0%  { background-position: 200% 0; }
+            100%{ background-position: -200% 0; }
+        }
+
+        /* ── Page header ── */
+        .page-header { margin-bottom: 1.5rem; }
+        .page-header h5 { font-size: 1.15rem; font-weight: 700; color: #0d2f6b; }
+        .page-header small { color: #6c757d; }
+    </style>
+</head>
+<body>
+
+<!-- ── NAVBAR — copy paste dari layananKesehatan.html ── -->
+<header id="header"
+    class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 px-4 border-bottom bg-white shadow-sm">
+    <div class="col-md-auto mb-2 mb-md-0">
+        <a href="../index.html">
+            <img src="../../assets/img/logo.png" alt="logo Baitulmal Tazkia" class="w-25">
+        </a>
+    </div>
+    <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+        <li><a href="layananKesehatan.html" class="nav-link px-2 fw-medium ">Layanan Kesehatan</a></li>
+        <li><a href="statusPemesanan.html"     class="nav-link px-2 fw-medium">Status Pemesanan</a></li>
+        <li><a href="about.html"            class="nav-link px-2 fw-medium">Tentang Kami</a></li>
+    </ul>
+    <!-- authNavButtons diisi oleh JS — sama persis dengan halaman lain -->
+    <div class="col-md-3 text-end" id="authNavButtons"></div>
+</header>
+
+<!-- ── MAIN LAYOUT — sama dengan statusPemesanan ── -->
+<div class="container-fluid">
+    <div class="row">
+
+        <!-- Sidebar -->
+        <!-- Content -->
+        <div class="col-12 col-lg-12 p-4">
+            <div class="page-header d-flex justify-content-between align-items-start">
+                <div>
+                    <h5>Dashboard Analitik</h5>
+                    <small>Ringkasan aktivitas layanan kesehatan Tazkia Baitulmal</small>
+                </div>
+                <button class="btn btn-orange" id="btnRefresh">🔄 Refresh</button>
+            </div>
+
+            <div id="dashContent"></div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Bootstrap — sama dengan halaman lain (vendor dulu, CDN fallback) -->
+<script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- api.js non-module (sama seperti layananKesehatan) -->
+<script src="../../assets/js/api.js"></script>
+
+<!-- Dashboard script -->
+<script type="module" src="../../assets/js/pages/adminDashboard.js"></script>
+
+</body>
+</html>

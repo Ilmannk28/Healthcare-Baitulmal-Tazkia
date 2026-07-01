@@ -1,0 +1,12 @@
+// Load library internal Sass yang dibutuhkan Bootstrap
+@use "sass:color";
+@use "sass:math";
+
+@use "../../node_modules/bootstrap/scss/bootstrap" with (
+  $primary: #002866,
+  $secondary: #F9A41C
+);
+
+body {
+  font-family: 'Poppins', sans-serif;
+}

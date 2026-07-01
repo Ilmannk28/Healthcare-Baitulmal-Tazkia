@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pemesanan Ambulans</title>
+    <link rel="stylesheet" href="../../scss/style.css">
+    <link rel="stylesheet" href="../../scss/custom.css">
+    <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <!-- Geocoder (search box) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+
+    <!-- Routing (opsional, tapi keren) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
+</head>
+
+<body>
+    <!-- Navbar Start -->
+    <header id="header"
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 px-4 border-bottom bg-white shadow-sm">
+        <div class="col-md-auto mb-2 mb-md-0">
+            <a href="../index.html">
+                <img src="../../assets/img/logo.png" class="w-25">
+            </a>
+        </div>
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+            <li><a href="../dashboard/layananKesehatan.html" class="nav-link px-2 fw-medium link-secondary">Layanan Kesehatan</a></li>
+            <li><a href="../dashboard/statusPemesanan.html" class="nav-link px-2 fw-medium">Status Pemesanan</a></li>
+            <li><a href="#" class="nav-link px-2 fw-medium">Tentang Kami</a></li>
+        </ul>
+        <div class="col-md-3 text-end">
+            <a href="login.html"> <button type="button" class="btn btn-outline-primary me-2"> Login</button></a>
+            <a href="register.html"><button type="button" class="btn btn-outline-secondary">Sign-up</button></a>
+        </div>
+    </header>
+    <!-- Navbar End -->
+
+    <!-- Main Start -->
+    <main>
+        <div class="container pt-3 mb-5">
+
+            <h1 class="text-center text-primary fw-semibold mb-3">Form Pemesanan Ambulan </h1>
+
+            <form id="serviceForm" class="bg-primary form-control p-4 text-white" enctype="multipart/form-data">
+                <input type="hidden" name="ambulance_id" value="">
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label for="patient_name" class="form-label small fw-semibold">Nama Pasien</label>
+                        <input type="text" class="form-control form-control-sm" id="nama_pasien" name="patient_name"
+                            placeholder="Masukan nama anda" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="phone" class="form-label small fw-semibold">Nomor yang dapat
+                            dihubungi:</label>
+                        <input type="tel" class="form-control form-control-sm" id="nomor_telpon" name="phone"
+                            placeholder="Masukan Nomor anda" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label for="gender" class="form-label small fw-semibold">Jenis Kelamin</label>
+                        <select class="form-select form-select-sm" id="gender" name="gender"
+                            aria-label="Small select example" required>
+                            <option value="" selected>-- Pilih Jenis Kelamin --</option>
+                            <option value="male">Laki-laki</option>
+                            <option value="female">Perempuan</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label for="birth_date" class="form-label small fw-semibold">Tanggal Lahir</label>
+                        <input type="date" class="form-control form-control-sm" id="tanggal_lahir" name="birth_date"
+                            placeholder="Masukan email anda" required>
+                    </div>
+                </div>
+                <div class="row mb-3 align-items-start">
+                    <!-- Bagian Alamat -->
+                    <div class="col-10">
+                        <label for="address" class="form-label small fw-semibold text-white">Alamat Lengkap</label>
+                        <textarea class="form-control" id="alamat" name="address" rows="3"
+                            placeholder="Masukkan alamat lengkap..." required></textarea>
+                    </div>
+
+                    <!-- Bagian Pilih Lokasi -->
+                    <div class="col-2 text-center">
+                        <label class="form-label small fw-semibold text-white d-block">Pilih Lokasi</label>
+                        <a href="#" class="d-inline-block bg-white px-4 rounded" data-bs-toggle="modal"
+                            data-bs-target="#mapsModal">
+                            <img src="../../assets/img/maps.png" class="img-fluid rounded shadow-sm" alt="Pilih Lokasi"
+                                style="max-height: 85px;">
+                        </a>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="patient_condition" class="form-label small fw-semibold text-white">Kondisi
+                        Pasien</label>
+                    <textarea class="form-control" id="kondisi" name="patient_condition" rows="3"
+                        placeholder="Jelaskan kondisi pasien" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="destination" class="form-label small fw-semibold">Tujuan</label>
+                    <input type="text" class="form-control form-control-sm" id="tujuan" name="destination"
+                        placeholder="Masukan Tujuan..." required>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label for="formFileSm" class="form-label small">KTP</label>
+                        <input class="form-control form-control-sm" name="ktp" type="file" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="formFileSm" class="form-label small">Kartu Keluarga</label>
+                        <input class="form-control form-control-sm" name="kk" type="file" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-6">
+                        <label for="formFileSm" class="form-label small">SKTM</label>
+                        <input class="form-control form-control-sm" name="sktm" type="file" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="formFileSm" class="form-label small">Surat Rujukan Rumah Sakit</label>
+                        <input class="form-control form-control-sm" name="surat_rujukan" type="file" required>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <button type="submit" class="btn btn-secondary w-100 mb-4">Submit</button>
+                </div>
+            </form>
+
+            <!-- Modal Maps Start -->
+            <div class="modal fade" id="mapsModal" tabindex="-1" aria-labelledby="mapsModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="mapsModalLabel">Pilih Lokasi Alamat</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Kontainer Peta -->
+                            <div id="map" style="height: 400px; width: 100%;"></div>
+                            <div class="mt-2">
+                                <small class="text-muted">Klik pada peta untuk memilih lokasi atau geser marker.</small>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Simpan Lokasi</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal Maps end -->
+        </div>
+    </main>
+    <!-- Main End -->
+
+    <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.min.js"></script>
+    <script>
+        let map, marker, routingControl;
+        const alamatTextarea = document.getElementById('alamat');
+        const mapsModal = document.getElementById('mapsModal');
+        const openMapBtn = document.querySelector('[data-bs-target="#mapsModal"]');
+
+        mapsModal.addEventListener('shown.bs.modal', () => {
+            const initialCoords = [-6.568144, 106.8440649]; // lat, lng
+
+            if (!map) {
+                // INIT MAP
+                map = L.map('map', {
+                    zoomControl: false // kita pindahin posisi
+                }).setView(initialCoords, 13);
+
+                // 🔥 TILE MODERN (mirip Google Maps)
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; OpenStreetMap & CartoDB'
+                }).addTo(map);
+
+                // Pindahin zoom control ke kanan bawah 
+                L.control.zoom({ position: 'bottomright' }).addTo(map);
+
+                // CUSTOM MARKER 
+                const customIcon = L.icon({
+                    iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+                    iconSize: [36, 36],
+                    iconAnchor: [18, 36]
+                });
+
+                marker = L.marker(initialCoords, {
+                    draggable: true,
+                    icon: customIcon
+                }).addTo(map);
+
+                // 🔁 DRAG MARKER
+                marker.on('dragend', () => {
+                    const pos = marker.getLatLng();
+                    reverseGeocode(pos.lat, pos.lng);
+                });
+
+                // 🖱️ KLIK MAP
+                map.on('click', (e) => {
+                    const { lat, lng } = e.latlng;
+                    marker.setLatLng([lat, lng]);
+                    reverseGeocode(lat, lng);
+                });
+
+                // 🔍 SEARCH BOX (GEOCODER)
+                const geocoder = L.Control.geocoder({
+                    defaultMarkGeocode: false
+                })
+                    .on('markgeocode', function (e) {
+                        const latlng = e.geocode.center;
+                        map.setView(latlng, 16);
+                        marker.setLatLng(latlng);
+                        alamatTextarea.value = e.geocode.name;
+                    })
+                    .addTo(map);
+
+                // 📍 AUTO DETECT LOKASI USER
+                map.locate({ setView: true, maxZoom: 16 });
+
+                map.on('locationfound', function (e) {
+                    marker.setLatLng(e.latlng);
+                    reverseGeocode(e.latitude, e.longitude);
+                });
+
+                // 🚧 OPTIONAL: ROUTING (lokasi user → titik pilih)
+                routingControl = L.Routing.control({
+                    waypoints: [
+                        L.latLng(initialCoords[0], initialCoords[1]),
+                        L.latLng(initialCoords[0], initialCoords[1])
+                    ],
+                    routeWhileDragging: false,
+                    addWaypoints: false,
+                    draggableWaypoints: false,
+                    createMarker: () => null
+                }).addTo(map);
+
+                // update route saat marker berubah
+                function updateRoute(lat, lng) {
+                    routingControl.setWaypoints([
+                        routingControl.getWaypoints()[0].latLng,
+                        L.latLng(lat, lng)
+                    ]);
+                }
+
+                marker.on('moveend', () => {
+                    const pos = marker.getLatLng();
+                    updateRoute(pos.lat, pos.lng);
+                });
+
+            } else {
+                map.invalidateSize();
+            }
+        });
+
+        // 🧠 FIX ARIA WARNING (Bootstrap modal)
+        mapsModal.addEventListener('hidden.bs.modal', () => {
+            setTimeout(() => {
+                if (document.activeElement) document.activeElement.blur();
+                if (openMapBtn) openMapBtn.focus();
+            }, 50);
+        });
+
+        // 🌍 REVERSE GEOCODING (Nominatim - gratis)
+        function reverseGeocode(lat, lng) {
+            fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.display_name) {
+                        alamatTextarea.value = data.display_name;
+                    }
+                })
+                .catch(() => {
+                    alamatTextarea.value = `Koordinat: ${lat}, ${lng}`;
+                });
+        }
+    </script>
+
+    <script type="module" src="../../assets/js/forms/ambulanceForm.js"></script>
+    <script type="module" src="../../assets/js/api/ambulanceApi.js"></script>
+</body>
+
+</html>

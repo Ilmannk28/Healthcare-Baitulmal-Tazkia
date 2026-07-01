@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <link rel="stylesheet" href="../scss/style.css">
+    <link rel="stylesheet" href="../scss/custom.css">
+</head>
+
+<body>
+    <div class="container-fluid bg-primary w-100 py-5 align-content-center ">
+        <div class="bg-white w-50 m-auto rounded-4  justify-content-center px-4 pt-5 pb-3">
+            <div class="text-center align-items-center mx-auto w-50 mb-3">
+                <img src="../assets/img/logo.png" class="w-25" alt="">
+            </div>
+            <h4 class="text-center fw-bold text-primary mb-3">Selamat Datang!</h4>
+            <form id="registerForm">
+
+                <div class="mb-3">
+                    <label for="name" class="form-label small fw-bold">
+                        Nama Lengkap
+                    </label>
+
+                    <input type="text" class="form-control form-control-sm" id="name" name="name"
+                        placeholder="Masukan nama anda" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="birth_date" class="form-label small fw-bold">
+                        Tanggal Lahir
+                    </label>
+
+                    <input type="date" class="form-control form-control-sm" id="birth_date" name="birth_date" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="gender" class="form-label small fw-bold">
+                        Jenis Kelamin
+                    </label>
+
+                    <select class="form-select form-select-sm" id="gender" name="gender" required>
+                        <option value="">
+                            Pilih Jenis Kelamin
+                        </option>
+
+                        <option value="male">
+                            Laki-laki
+                        </option>
+
+                        <option value="female">
+                            Perempuan
+                        </option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label small fw-bold">
+                        Email Address
+                    </label>
+
+                    <input type="email" class="form-control form-control-sm" id="email" name="email"
+                        placeholder="Masukan email anda" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="password" class="form-label small fw-bold">
+                        Password
+                    </label>
+
+                    <input type="password" class="form-control form-control-sm" id="password" name="password"
+                        placeholder="Masukan password anda" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="confirm_password" class="form-label small fw-bold">
+                        Konfirmasi Password
+                    </label>
+
+                    <input type="password" class="form-control form-control-sm" id="confirm_password"
+                        name="confirm_password" placeholder="Masukan ulang password" required>
+                </div>
+
+                <div class="mt-5">
+
+                    <button type="submit" class="btn btn-primary w-100 mb-4 fw-semibold">
+                        Daftar
+                    </button>
+
+                    <p class="text-center">
+                        Sudah memiliki akun?
+
+                        <span class="fw-bold">
+                            <a href="login.html" class="text-decoration-none">
+                                Login
+                            </a>
+                        </span>
+                    </p>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+    <script type="module" src="../assets/js/auth/register.js">
+    </script>
+</body>
+
+</html>
