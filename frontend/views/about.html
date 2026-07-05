@@ -12,24 +12,45 @@
 </head>
 
 <body>
-    <header id="header"
-        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 px-4 border-bottom bg-white shadow-sm">
-        <div class="col-md-auto mb-2 mb-md-0">
-            <a href="./index.html">
-                <img src="../assets/img/logo.png" class="w-25">
-            </a>
-        </div>
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="dashboard/layananKesehatan.html" class="nav-link px-2 fw-medium ">Layanan
-                    Kesehatan</a></li>
-            <li><a href="dashboard/statusPemesanan.html" class="nav-link px-2 fw-medium">Status Pemesanan</a></li>
-            <li><a href="about.html" class="nav-link px-2 fw-bold active">Tentang Kami</a></li>
-        </ul>
-        <div class="col-md-3 text-end" id="authNavButtons">
-            <a href="/login.html"> <button type="button" class="btn btn-outline-primary me-2"> ogin</button></a>
-            <a href="/register.html"><button type="button" class="btn btn-outline-secondary">Sign-up</button></a>
-        </div>
+    <header id="header" class="border-bottom bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md py-3 px-4">
+            <div class="container-fluid px-0">
+                <a href="../index.html" class="navbar-brand me-0">
+                    <img src="../assets/img/logo.png" alt="logo Baitulmal Tazkia" class="w-25">
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                    aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-md-between" id="navbarMain">
+                    <ul
+                        class="nav flex-column px flex-md-row col-md-auto mt-3 ms-3 justify-content-center mt-md-0 text-center text-md-start">
+                        <li class="py-2 py-md-0 border-bottom border-md-0">
+                            <a href="./dashboard/layananKesehatan.html" class="nav-link px-2 fw-medium ">Layanan Kesehatan</a>
+                        </li>
+                        <li class="py-2 py-md-0 border-bottom border-md-0">
+                            <a href="./dashboard/statusPemesanan.html" class="nav-link px-2 fw-medium">Status Pemesanan</a>
+                        </li>
+                        <li class="py-2 py-md-0">
+                            <a href="#" class="nav-link px-2 fw-bold active">Tentang Kami</a>
+                        </li>
+                    </ul>
+                    <div class="col-md-3 d-flex flex-column flex-md-row justify-content-center justify-content-md-end gap-2 mt-3 mt-md-0 pb-2 pb-md-0"
+                        id="authNavButtons">
+                        <a href="../login.html" class="w-100 w-md-auto">
+                            <button type="button" class="btn btn-outline-primary w-100">Login</button>
+                        </a>
+                        <a href="../register.html" class="w-100 w-md-auto">
+                            <button type="button" class="btn btn-outline-secondary w-100">Sign-up</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </header>
+
     <main class=" bg-secondary">
         <div class=" h-100 w-100 p-5 d-flex flex-row">
             <div class="col-6 d-flex flex-column align-items-center">
@@ -38,16 +59,18 @@
             </div>
             <div class="col-6 ">
                 <h2 class="fw-semibold text-primary">Tentang Kami</h2>
-                <p class="lh-base fs-5"  style="text-align: justify;">Layanan Kesehatan Baitul Mal Tazkia adalah platform berbasis web yang hadir untuk memudahkan
+                <p class="lh-base fs-5" style="text-align: justify;">Layanan Kesehatan Baitul Mal Tazkia adalah platform
+                    berbasis web yang hadir untuk memudahkan
                     masyarakat dalam mengajukan bantuan kesehatan secara cepat dan terorganisir. Melalui layanan
                     pemesanan ambulans gratis, peminjaman kursi roda, dan pendaftaran khitanan massal, kami berupaya
                     menjembatani kebutuhan kesehatan dengan proses yang lebih praktis dan transparan.
-<br><br>
+                    <br><br>
                     Sistem ini dirancang agar setiap pengajuan dapat dipantau statusnya, mulai dari proses verifikasi
                     hingga penyelesaian, sehingga masyarakat merasa lebih tenang dan terbantu dalam situasi mendesak
                     maupun kegiatan kesehatan yang terencana. Dengan mengedepankan kemudahan akses, efisiensi, dan
                     kepedulian sosial, layanan ini menjadi wujud komitmen Baitul Mal Tazkia dalam memberikan manfaat dan
-                    pelayanan terbaik bagi masyarakat.</p>
+                    pelayanan terbaik bagi masyarakat.
+                </p>
             </div>
         </div>
 

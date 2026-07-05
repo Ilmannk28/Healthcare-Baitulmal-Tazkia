@@ -52,31 +52,77 @@ async function loadRequests() {
 // ── RENDER TABEL ────────────────────────────────────────────────────────────
 function renderTable(requests) {
     const app = document.getElementById("app");
-    if (!requests || requests.length === 0) {
-        app.innerHTML = `
-            <div class="text-center py-5 text-muted">
-                <p class="fs-1 mb-1">📋</p>
-                <p>Tidak ada permintaan layanan ditemukan.</p>
-            </div>`;
-        return;
-    }
+    const hasData = requests && requests.length > 0;
+
+    const btnClass = currentRole === "admin" ? "btn-detail-admin" : "btn-detail-user";
+
+    const rowInfo = (r) => ({
+        statusClass: getStatusClass(r.status_name),
+        tanggal: fmtTanggal(r.created_at)
+    });
+
+    // ── Versi TABEL (desktop) ──
+    const tableRows = hasData
+        ? requests.map(r => {
+            const { statusClass, tanggal } = rowInfo(r);
+            return `
+                <tr>
+                    <td class="fw-bold text-muted small">REQ-${r.request_id}</td>
+                    <td>${r.service_name}</td>
+                    <td>${r.user_name}</td>
+                    <td class="small">${tanggal}</td>
+                    <td><span class="status-badge ${statusClass}">${r.status_name}</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-orange ${btnClass}" data-id="${r.request_id}">
+                            Detail
+                        </button>
+                    </td>
+                </tr>`;
+        }).join("")
+        : `<tr><td colspan="6" class="text-center text-muted py-4">Tidak ada permintaan layanan ditemukan.</td></tr>`;
+
+    // ── Versi CARD (mobile) ──
+    const cards = hasData
+        ? requests.map(r => {
+            const { statusClass, tanggal } = rowInfo(r);
+            return `
+                <div class="card mb-2 shadow-sm">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-2">
+                            <span class="fw-bold text-muted small">REQ-${r.request_id}</span>
+                            <span class="status-badge ${statusClass}">${r.status_name}</span>
+                        </div>
+                        <div class="fw-semibold mb-1">${r.service_name}</div>
+                        <div class="small text-muted mb-1">Pemohon: ${r.user_name}</div>
+                        <div class="small text-muted mb-3">Tanggal: ${tanggal}</div>
+                        <button class="btn btn-sm btn-orange w-100 ${btnClass}" data-id="${r.request_id}">
+                            Detail
+                        </button>
+                    </div>
+                </div>`;
+        }).join("")
+        : `<div class="text-center text-muted py-4">Tidak ada permintaan layanan ditemukan.</div>`;
 
     app.innerHTML = `
-        <table class="table table-hover mb-0">
-            <thead class="table-dark">
-                <tr>
-                    <th>ID</th>
-                    <th>Layanan</th>
-                    <th>Nama Pemohon</th>
-                    <th>Tanggal</th>
-                    <th>Status</th>
-                    <th>Aksi</th>
-                </tr>
-            </thead>
-            <tbody>
-                ${requests.map(r => buildRow(r)).join("")}
-            </tbody>
-        </table>`;
+        <!-- Mobile: card list -->
+        <div class="d-md-none">${cards}</div>
+
+        <!-- Desktop: table -->
+        <div class="table-responsive bg-white p-3 rounded shadow-sm d-none d-md-block">
+            <table class="table table-hover mb-0">
+                <thead class="table-dark">
+                    <tr>
+                        <th>ID</th>
+                        <th>Layanan</th>
+                        <th>Nama Pemohon</th>
+                        <th>Tanggal</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>${tableRows}</tbody>
+            </table>
+        </div>`;
 }
 
 function buildRow(r) {
@@ -479,4 +525,19 @@ function setupSidebarFilter() {
             renderTable(filtered);
         });
     });
+}
+
+function getStatusClass(status) {
+    return {
+        pending: "status-pending",
+        approved: "status-approved",
+        rejected: "status-rejected",
+        completed: "status-completed"
+    }[status] || "status-pending";
+}
+
+function fmtTanggal(dateStr) {
+    return dateStr
+        ? new Date(dateStr).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" })
+        : "-";
 }

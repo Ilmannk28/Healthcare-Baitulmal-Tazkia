@@ -16,7 +16,6 @@
         .sidebar {
             background-color: #0d2f6b;
             color: white;
-            height: 100vh;
         }
 
         .sidebar .nav-link {
@@ -54,50 +53,75 @@
         .status-unavailable {
             color: gray;
         }
+
+        @media (min-width: 768px) {
+            .sidebar {
+                min-height: calc(100vh - 89px);
+            }
+        }
     </style>
 </head>
 
 <body>
 
     <!-- Navbar -->
-    <header id="header"
-        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 px-4 border-bottom bg-white shadow-sm">
-        <div class="col-md-auto mb-2 mb-md-0">
-            <a href="../index.html">
+    <header id="header" class="border-bottom bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md py-3 px-4">
+            <div class="container-fluid px-0">
+                <a href="../index.html" class="navbar-brand me-0">
+                    <img src="../../assets/img/logo.png" alt="logo Baitulmal Tazkia" class="w-25">
+                </a>
 
-                <img src="../../assets/img/logo.png" alt="logo Baitulmal Tazkia" class="w-25">
-            </a>
-        </div>
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="#" class="nav-link px-2 fw-bold active">Layanan Kesehatan</a></li>
-            <li><a href="statusPemesanan.html" class="nav-link px-2 fw-medium">Status Pemesanan</a></li>
-            <li><a href="../about.html" class="nav-link px-2 fw-medium">Tentang Kami</a></li>
-        </ul>
-        <div class="col-md-3 text-end" id="authNavButtons">
-            <a href="../login.html"> <button type="button" class="btn btn-outline-primary me-2"> Login</button></a>
-            <a href="../register.html"><button type="button" class="btn btn-outline-secondary">Sign-up</button></a>
-        </div>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                    aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse justify-content-md-between" id="navbarMain">
+                    <ul class="nav flex-column px flex-md-row col-md-auto mt-3 ms-3 justify-content-center mt-md-0 text-center text-md-start">
+                        <li class="py-2 py-md-0 border-bottom border-md-0">
+                            <a href="#" class="nav-link px-2 fw-bold active">Layanan Kesehatan</a>
+                        </li>
+                        <li class="py-2 py-md-0 border-bottom border-md-0">
+                            <a href="statusPemesanan.html" class="nav-link px-2 fw-medium">Status Pemesanan</a>
+                        </li>
+                        <li class="py-2 py-md-0">
+                            <a href="../about.html" class="nav-link px-2 fw-medium">Tentang Kami</a>
+                        </li>
+                    </ul>
+                    <div class="col-md-3 d-flex flex-column flex-md-row justify-content-center justify-content-md-end gap-2 mt-3 mt-md-0 pb-2 pb-md-0"
+                        id="authNavButtons">
+                        <a href="../login.html" class="w-100 w-md-auto">
+                            <button type="button" class="btn btn-outline-primary w-100">Login</button>
+                        </a>
+                        <a href="../register.html" class="w-100 w-md-auto">
+                            <button type="button" class="btn btn-outline-secondary w-100">Sign-up</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
     </header>
 
     <!-- Main Layout -->
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
-            <div class="col-md-3 sidebar p-4">
-                <h5 class="mb-4">Daftar Layanan</h5>
+            <div class="col-12 col-md-3 sidebar p-3 p-md-4">
+                <h5 class="mb-3 mb-md-4 d-none d-md-block">Daftar Layanan</h5>
 
-                <ul class="nav flex-column">
-                    <li class="nav-item">
+                <ul class="nav flex-row flex-md-column overflow-auto flex-nowrap gap-2">
+                    <li class="nav-item flex-shrink-0">
                         <a href="#" class="nav-link" id="ambulans" onclick="loadPage('ambulans')">
                             Ambulan Gratis
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item flex-shrink-0">
                         <a href="#" class="nav-link" id="kursi" onclick="loadPage('kursi')">
                             Kursi Roda
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item flex-shrink-0">
                         <a href="#" class="nav-link" id="khitan" onclick="loadPage('khitan')">
                             Khitanan Massal
                         </a>
@@ -106,18 +130,11 @@
             </div>
 
             <!-- Content -->
-            <div class="col-md-9 p-4">
-
-                <!-- Title -->
+            <div class="col-12 col-md-9 p-3 p-md-4">
                 <div class="topbar rounded mb-3">
                     <h5 class="mb-0" id="title_dashboard">Daftar Pemesanan</h5>
                 </div>
-
-                <!-- SPA Content -->
-                <div id="app">
-
-                </div>
-
+                <div id="app"></div>
             </div>
         </div>
     </div>

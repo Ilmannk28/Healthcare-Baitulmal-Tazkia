@@ -5,6 +5,7 @@ import { createWheelchairRequest } from "../api/wheelchairApi.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
+    //  1. Cek login
     const token = localStorage.getItem("token");
     if (!token) {
         alert("Anda harus login terlebih dahulu.");
@@ -12,7 +13,8 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    const params       = new URLSearchParams(window.location.search);
+    // 2. Baca ambulance_id dari URL 
+    const params = new URLSearchParams(window.location.search);
     const wheelchairId = params.get("id");
 
     if (!wheelchairId) {
@@ -21,11 +23,14 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
+    // 3. Isi hidden field ambulance_id    
     const hiddenInput = document.querySelector('input[name="wheelchair_id"]');
     if (hiddenInput) hiddenInput.value = wheelchairId;
 
+    // 4. Render navbar (nama user + logout) 
     renderNavbar();
 
+    // 5. Handle submit form
     const form = document.getElementById("serviceForm");
     if (!form) return;
 
@@ -38,6 +43,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const formData = new FormData(form);
+
+            // memastikan ambulance_id ikut terkirim
             formData.set("wheelchair_id", wheelchairId);
 
             const result = await createWheelchairRequest(formData);

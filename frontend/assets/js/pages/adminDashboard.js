@@ -1,14 +1,14 @@
 // frontend/assets/js/pages/adminDashboard.js
 
-const BASE_URL    = "http://localhost:3000/api";
-const getToken    = () => localStorage.getItem("token");
-const getRole     = () => localStorage.getItem("userRole");
+const BASE_URL = "http://localhost:3000/api";
+const getToken = () => localStorage.getItem("token");
+const getRole = () => localStorage.getItem("userRole");
 const getUserName = () => localStorage.getItem("userName") || "Admin";
 
 let lineChartInstance = null;
 let doughnutChartInst = null;
 
-// ── ENTRY POINT ──────────────────────────────────────────────────────────────
+//  ENTRY POINT 
 document.addEventListener("DOMContentLoaded", async () => {
     if (!getToken() || getRole() !== "admin") {
         alert("Akses ditolak! Hanya admin yang dapat mengakses halaman ini.");
@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     await loadDashboard();
 });
 
-// ── NAVBAR — isi authNavButtons, sama polanya dengan halaman lain ─────────────
+//  NAVBAR — isi authNavButtons, sama polanya dengan halaman lain 
 function renderNavbar() {
     const authDiv = document.getElementById("authNavButtons");
     if (!authDiv) return;
@@ -47,7 +47,7 @@ function doLogout() {
     window.location.href = "../login.html";
 }
 
-// ── FETCH DATA ────────────────────────────────────────────────────────────────
+//  FETCH DATA 
 async function loadDashboard() {
     showSkeleton();
     try {
@@ -79,7 +79,7 @@ async function loadDashboard() {
     }
 }
 
-// ── SKELETON ─────────────────────────────────────────────────────────────────
+//  SKELETON 
 function showSkeleton() {
     document.getElementById("dashContent").innerHTML = `
         <div class="row g-3 mb-4">
@@ -95,9 +95,14 @@ function showSkeleton() {
         </div>`;
 }
 
-// ── RENDER SEMUA ──────────────────────────────────────────────────────────────
+//  RENDER SEMUA 
 function render(data) {
+    console.log(data);
+
     const { summary, monthlyTrend, serviceDistribution, recentRequests, statusByService } = data;
+
+    console.log(summary);
+
 
     const growth = summary.requests_last_month > 0
         ? Math.round(((summary.requests_this_month - summary.requests_last_month) / summary.requests_last_month) * 100)
@@ -111,9 +116,9 @@ function render(data) {
         <div class="row g-3 mb-4">
             ${metricCard("Total Permintaan", summary.total_requests, "📋", growthHtml)}
             ${metricCard("Pengguna Aktif", summary.total_users, "👥",
-                `<span>${pct(summary.total_users, summary.total_requests)} req/user rata-rata</span>`)}
+        `<span>${pct(summary.total_users, summary.total_requests)} req/user rata-rata</span>`)}
             ${metricCard("Disetujui", summary.total_approved, "✅",
-                `<span>${pct(summary.total_approved, summary.total_requests)}% dari total</span>`)}
+            `<span>${pct(summary.total_approved, summary.total_requests)}% dari total</span>`)}
             ${metricCard("Bulan Ini", summary.requests_this_month, "📅",
                 `<span>Pending: ${summary.total_pending}</span>`)}
         </div>
@@ -177,10 +182,10 @@ function render(data) {
                 <div class="chart-card">
                     <h6>Distribusi Status Keseluruhan</h6>
                     <div class="row g-3">
-                        ${statusBar("Disetujui",  summary.total_approved,  summary.total_requests, "#198754")}
-                        ${statusBar("Pending",    summary.total_pending,   summary.total_requests, "#f59e0b")}
-                        ${statusBar("Selesai",    summary.total_completed, summary.total_requests, "#0d6efd")}
-                        ${statusBar("Ditolak",    summary.total_rejected,  summary.total_requests, "#dc3545")}
+                        ${statusBar("Disetujui", summary.total_approved, summary.total_requests, "#198754")}
+                        ${statusBar("Pending", summary.total_pending, summary.total_requests, "#f59e0b")}
+                        ${statusBar("Selesai", summary.total_completed, summary.total_requests, "#0d6efd")}
+                        ${statusBar("Ditolak", summary.total_rejected, summary.total_requests, "#dc3545")}
                     </div>
                 </div>
             </div>
@@ -191,21 +196,21 @@ function render(data) {
     renderBarChart(statusByService);
 }
 
-// ── CHART: LINE ───────────────────────────────────────────────────────────────
+//  CHART: LINE 
 function renderLineChart(monthlyTrend) {
     const months = [];
     for (let i = 5; i >= 0; i--) {
         const d = new Date();
         d.setDate(1);
         d.setMonth(d.getMonth() - i);
-        months.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}`);
+        months.push(`${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}`);
     }
 
     const services = [...new Set(monthlyTrend.map(r => r.service_name))];
     const palette = {
-        "Ambulance":  { border: "#0d2f6b", bg: "rgba(13,47,107,.07)"  },
-        "Wheelchair": { border: "#198754", bg: "rgba(25,135,84,.07)"  },
-        "Khitan":     { border: "#f59e0b", bg: "rgba(245,158,11,.07)" }
+        "Ambulance": { border: "#0d2f6b", bg: "rgba(13,47,107,.07)" },
+        "Wheelchair": { border: "#198754", bg: "rgba(25,135,84,.07)" },
+        "Khitan": { border: "#f59e0b", bg: "rgba(245,158,11,.07)" }
     };
 
     const datasets = services.map(svc => {
@@ -227,24 +232,24 @@ function renderLineChart(monthlyTrend) {
         data: {
             labels: months.map(m => {
                 const [y, mo] = m.split("-");
-                return new Date(y, mo-1).toLocaleDateString("id-ID", { month:"short", year:"2-digit" });
+                return new Date(y, mo - 1).toLocaleDateString("id-ID", { month: "short", year: "2-digit" });
             }),
             datasets
         },
         options: {
             responsive: true,
-            plugins: { legend: { position:"top", labels:{ boxWidth:12, font:{size:12} } } },
+            plugins: { legend: { position: "top", labels: { boxWidth: 12, font: { size: 12 } } } },
             scales: {
-                x: { grid:{ display:false } },
-                y: { beginAtZero:true, ticks:{ stepSize:1 } }
+                x: { grid: { display: false } },
+                y: { beginAtZero: true, ticks: { stepSize: 1 } }
             }
         }
     });
 }
 
-// ── CHART: DOUGHNUT ───────────────────────────────────────────────────────────
+//  CHART: DOUGHNUT 
 function renderDoughnutChart(serviceDistribution) {
-    const colors = ["#0d2f6b","#f59e0b","#198754","#6f42c1"];
+    const colors = ["#0d2f6b", "#f59e0b", "#198754", "#6f42c1"];
     if (doughnutChartInst) doughnutChartInst.destroy();
     doughnutChartInst = new Chart(document.getElementById("doughnutChart"), {
         type: "doughnut",
@@ -257,19 +262,19 @@ function renderDoughnutChart(serviceDistribution) {
         },
         options: {
             responsive: true, cutout: "65%",
-            plugins: { legend:{ position:"bottom", labels:{ boxWidth:12, font:{size:12} } } }
+            plugins: { legend: { position: "bottom", labels: { boxWidth: 12, font: { size: 12 } } } }
         }
     });
 }
 
-// ── CHART: GROUPED BAR ────────────────────────────────────────────────────────
+//  CHART: GROUPED BAR 
 function renderBarChart(statusByService) {
     const services = [...new Set(statusByService.map(r => r.service_name))];
-    const statuses = ["pending","approved","rejected","completed"];
-    const colors   = {
-        pending:   "#f59e0b",
-        approved:  "#198754",
-        rejected:  "#dc3545",
+    const statuses = ["pending", "approved", "rejected", "completed"];
+    const colors = {
+        pending: "#f59e0b",
+        approved: "#198754",
+        rejected: "#dc3545",
         completed: "#0d2f6b"
     };
 
@@ -280,7 +285,7 @@ function renderBarChart(statusByService) {
             datasets: statuses.map(st => ({
                 label: st.charAt(0).toUpperCase() + st.slice(1),
                 data: services.map(svc => {
-                    const f = statusByService.find(r => r.service_name===svc && r.status_name===st);
+                    const f = statusByService.find(r => r.service_name === svc && r.status_name === st);
                     return f ? f.total : 0;
                 }),
                 backgroundColor: colors[st], borderRadius: 4
@@ -288,23 +293,23 @@ function renderBarChart(statusByService) {
         },
         options: {
             responsive: true,
-            plugins: { legend:{ position:"top", labels:{ boxWidth:12, font:{size:12} } } },
+            plugins: { legend: { position: "top", labels: { boxWidth: 12, font: { size: 12 } } } },
             scales: {
-                x: { grid:{ display:false } },
-                y: { beginAtZero:true, ticks:{ stepSize:1 } }
+                x: { grid: { display: false } },
+                y: { beginAtZero: true, ticks: { stepSize: 1 } }
             }
         }
     });
 }
 
-// ── HELPERS ───────────────────────────────────────────────────────────────────
+//  HELPERS 
 function pct(part, total) {
     if (!total) return 0;
     return Math.round((part / total) * 100);
 }
 
 function fmtDate(d) {
-    return new Date(d).toLocaleDateString("id-ID", { day:"2-digit", month:"short", year:"numeric" });
+    return new Date(d).toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "numeric" });
 }
 
 function metricCard(label, value, icon, subHtml) {

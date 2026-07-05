@@ -1,5 +1,5 @@
 // frontend/assets/js/index.js
-import { renderNavbar } from "./utils/utils";
+import { renderNavbar } from "./utils/utils.js";
 
 document.addEventListener("DOMContentLoaded", () => {
     // 1. Render navbar secara otomatis (Default false karena index.html di luar folder dashboard)

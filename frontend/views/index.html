@@ -15,40 +15,54 @@
 <body>
     <!-- NAVBAR START -->
 
-    <header id="header"
-        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 px-4 border-bottom fixed-top bg-white shadow-sm">
-        <div class="col-md-auto mb-2 mb-md-0">
-            <a href="#">
+    <!-- NAVBAR START -->
+    <header id="header" class="fixed-top bg-white shadow-sm border-bottom">
+        <nav class="navbar navbar-expand-md py-3 px-4">
+            <div class="container-fluid px-0">
 
-                <img src="../assets/img/logo.png" class="w-25">
-            </a>
-        </div>
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="dashboard/layananKesehatan.html" class="nav-link px-2 fw-medium">Layanan
-                    Kesehatan</a></li>
-            <li><a href="dashboard/statusPemesanan.html" class="nav-link px-2 fw-medium">Status Pemesanan</a></li>
-            <li><a href="about.html" class="nav-link px-2 fw-medium">Tentang Kami</a></li>
-        </ul>
-        <div class="col-md-3 text-end" id="authNavButtons">
-            <a href="/login.html"> <button type="button" class="btn btn-outline-primary me-2"> Login</button></a>
-            <a href="/register.html"><button type="button" class="btn btn-outline-secondary">Sign-up</button></a>
-        </div>
+                <!-- Logo -->
+                <a href="#" class="navbar-brand me-0">
+                    <img src="../assets/img/logo.png" class="w-25">
+                </a>
+
+                <!-- Hamburger button -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                    aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Collapsible content -->
+                <div class="collapse navbar-collapse justify-content-md-between" id="navbarMain">
+                    <ul class="nav  flex-column flex-md-row col-md-auto mt-3 mt-md-0 justify-content-center">
+                        <li><a href="dashboard/layananKesehatan.html" class="nav-link px-2 fw-medium">Layanan
+                                Kesehatan</a></li>
+                        <li><a href="dashboard/statusPemesanan.html" class="nav-link px-2 fw-medium">Status
+                                Pemesanan</a></li>
+                        <li><a href="about.html" class="nav-link px-2 fw-medium">Tentang Kami</a></li>
+                    </ul>
+                    <div class="col-md-3 d-flex flex-column flex-md-row justify-content-center justify-content-md-end gap-2 mt-3 mt-md-0 pb-2 pb-md-0" id="authNavButtons">
+                        <a href="/login.html"><button type="button"
+                                class="btn btn-outline-primary me-2">Login</button></a>
+                        <a href="/register.html"><button type="button"
+                                class="btn btn-outline-secondary">Sign-up</button></a>
+                    </div>
+                </div>
+
+            </div>
+        </nav>
     </header>
+    <!-- NAVBAR END -->
 
     <!-- NAVBAR END -->
 
-    <main>
-        <!-- HERO START -->
-        <section id="hero">
+   <main class="pt-5"> <section id="hero">
             <div class="container-fluid bg-primary pt-5">
-                <div class="container text-center py-5 text-white">
-                    <div class="row align-items-center">
-                        <div class="col ">
-                            <div class="container w-100 position-relative my-5 " style="min-height: 350px;">
-                                <img src="../assets/img/hero1.png"
-                                    class="w-75 rounded-4 position-absolute start-0 top-0 z-2" alt="">
-                                <img src="../assets/img/hero2.png"
-                                    class="w-75 rounded-4 position-absolute end-0 bottom-0 z-1" alt="">
+                <div class="container py-5 text-white">
+                    <div class="row row-cols-1 row-cols-md-2 align-items-center g-4">
+                        <div class="col  order-md-1">
+                            <div class="position-relative mx-auto" style="min-height: 250px; max-width: 450px;">
+                                <img src="../assets/img/hero1.png" class="w-75 rounded-4 position-absolute start-0 top-0 z-2 shadow" alt="">
+                                <img src="../assets/img/hero2.png" class="w-75 rounded-4 position-absolute end-0 bottom-0 z-1 shadow" alt="">
                             </div>
                         </div>
                         <div class="col ms-4 text-start ">
@@ -66,160 +80,129 @@
                                     href="./dashboard/layananKesehatan.html">Lihat Layanan</a>
                             </div>
                         </div>
-
+                        <div class="col order-1 order-md-2 text-center text-md-start ps-md-4">
+                            <h1 class="fw-semibold mb-4 fs-2 fs-md-1">
+                                <span class="text-secondary">Layanan Kesehatan </span>Gratis
+                                <span class="text-secondary">yang </span>Cepat
+                                <span class="text-secondary"> dan </span>Mudah
+                            </h1>
+                            <p class="mb-4">Baitul Mal Tazkia menyediakan layanan ambulans, kursi roda, dan khitanan gratis untuk masyarakat yang membutuhkan.</p>
+                            <a class="bg-secondary text-primary text-decoration-none fw-semibold rounded-4 py-2 px-4 d-inline-block" href="./dashboard/layananKesehatan.html">Lihat Layanan</a>
+                        </div>
                     </div>
                 </div>
-
-
             </div>
         </section>
-        <!-- HERO END -->
-
-        <!-- CARD START -->
         <section id="card">
-            <div class="container py-5 justify-content-center">
-                <h1 class="text-center fw-bold text-primary mt-1 pb-3">Layanan Kesehatan</h1>
-                <div class="row align-items-center mt-4">
-                    <div class="col-lg">
-                        <div class="card bg-primary text-white mb-4 py-2">
+            <div class="container py-5">
+                <h1 class="text-center fw-bold text-primary mt-1 pb-3 fs-2">Layanan Kesehatan</h1>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4 mt-2">
+                    <div class="col">
+                        <div class="card bg-primary text-white h-100 py-2">
                             <div class="p-3 rounded-3 overflow-hidden">
-                                <img src="../assets/img/ambulans.png" class="card-img-top object-fit-cover rounded-3"
-                                    alt="...">
+                                <img src="../assets/img/ambulans.png" class="card-img-top object-fit-cover rounded-3" alt="...">
                             </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Pemesanan Ambulan</h5>
-                                <p class="card-text small">Layanan ambulans gratis untuk pasien darurat dalam wilayah
-                                    Bogor.</p>
-                                <a class="bg-secondary btn-layanan mt-4 mb-2 rounded-4 fw-bold text-primary text-decoration-none py-1 px-4"
-                                    href="dashboard/layananKesehatan.html">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Pemesanan Ambulan</h5>
+                                    <p class="card-text small">Layanan ambulans gratis untuk pasien darurat dalam wilayah Bogor.</p>
+                                </div>
+                                <a class="bg-secondary btn-layanan mt-4 rounded-4 fw-bold text-primary text-decoration-none py-2 px-4 text-center" href="dashboard/layananKesehatan.html">
                                     Pesan Ambulan
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg">
-                        <div class="card bg-primary text-white mb-4 py-2">
+                    <div class="col">
+                        <div class="card bg-primary text-white h-100 py-2">
                             <div class="p-3 rounded-3 overflow-hidden">
-                                <img src="../assets/img/ambulans.png" class="card-img-top object-fit-cover rounded-3"
-                                    alt="...">
+                                <img src="../assets/img/ambulans.png" class="card-img-top object-fit-cover rounded-3" alt="...">
                             </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Peminjaman Kursi roda</h5>
-                                <p class="card-text small">Peminjaman kursi roda gratis untuk masyarakat yang
-                                    membutuhkan.</p>
-                                <a class="bg-secondary btn-layanan mt-4 mb-2 rounded-4 fw-bold text-primary text-decoration-none py-1 px-4"
-                                    href="dashboard/layananKesehatan.html">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Peminjaman Kursi roda</h5>
+                                    <p class="card-text small">Peminjaman kursi roda gratis untuk masyarakat yang membutuhkan.</p>
+                                </div>
+                                <a class="bg-secondary btn-layanan mt-4 rounded-4 fw-bold text-primary text-decoration-none py-2 px-4 text-center" href="dashboard/layananKesehatan.html">
                                     Pinjam Kursi roda
                                 </a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg">
-                        <div class="card bg-primary text-white mb-4 py-2">
+                    <div class="col">
+                        <div class="card bg-primary text-white h-100 py-2">
                             <div class="p-3 rounded-3 overflow-hidden">
-                                <img src="../assets/img/ambulans.png" class="card-img-top object-fit-cover rounded-3"
-                                    alt="...">
+                                <img src="../assets/img/ambulans.png" class="card-img-top object-fit-cover rounded-3" alt="...">
                             </div>
-                            <div class="card-body">
-                                <h5 class="card-title">Pendaftaran Khitan </h5>
-                                <p class="card-text small">Khitanan massal gratis dengan proses yang nyaman dan aman
-                                    bagi anak-anak.</p>
-                                <a class="bg-secondary btn-layanan mt-4 mb-2 rounded-4 fw-bold text-primary text-decoration-none py-1 px-4"
-                                    href="dashboard/layananKesehatan.html">
+                            <div class="card-body d-flex flex-column justify-content-between">
+                                <div>
+                                    <h5 class="card-title">Pendaftaran Khitan</h5>
+                                    <p class="card-text small">Khitanan massal gratis dengan proses yang nyaman dan aman bagi anak-anak.</p>
+                                </div>
+                                <a class="bg-secondary btn-layanan mt-4 rounded-4 fw-bold text-primary text-decoration-none py-2 px-4 text-center" href="dashboard/layananKesehatan.html">
                                     Daftar Khitan massal
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </section>
-        <!-- CARD END -->
-
-        <!-- FLOW START -->
-
         <section id="flow">
-
-            <div class="py-5 bg-secondary justify-content-center align-items-center">
-                <h1 class="text-primary text-center fw-bold">Alur Pengajuan</h1>
-                <div class="my-5 mx-auto text-white  position-relative" style="max-width: 800px;">
-                    <div class="progress position-absolute top-50 start-0 translate-middle-y w-100" role="progressbar"
-                        aria-label="Progress" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"
-                        style="height:20px;">
+            <div class="py-5 bg-secondary px-3">
+                <h1 class="text-primary text-center fw-bold fs-2 mb-4">Alur Pengajuan</h1>
+                
+                <div class="my-5 mx-auto text-white position-relative d-none d-md-block" style="max-width: 800px;">
+                    <div class="progress position-absolute top-50 start-0 translate-middle-y w-100" role="progressbar" style="height:20px;">
                         <div class="progress-bar" style="width: 50%"></div>
                     </div>
                     <div class="d-flex justify-content-between position-relative" style="z-index: 1;">
-                        <div class="bg-primary fw-bold fs-4 rounded-circle justify-content-center align-items-center d-flex"
-                            style="width: 80px; height: 80px;">1</div>
-                        <div class="bg-primary fw-bold fs-4 rounded-circle justify-content-center align-items-center d-flex"
-                            style="width: 80px; height: 80px;">2</div>
-                        <div class="bg-primary fw-bold fs-4 rounded-circle justify-content-center align-items-center d-flex"
-                            style="width: 80px; height: 80px;">3</div>
-                        <div class="bg-white text-primary fw-bold fs-4 rounded-circle justify-content-center align-items-center d-flex"
-                            style="width: 80px; height: 80px;">4</div>
-                        <div class="bg-white text-primary fw-bold fs-4 rounded-circle justify-content-center align-items-center d-flex"
-                            style="width: 80px; height: 80px;">5</div>
+                        <div class="bg-primary fw-bold fs-4 rounded-circle justify-content-center align-items-center d-flex" style="width: 60px; height: 60px;">1</div>
+                        <div class="bg-primary fw-bold fs-4 rounded-circle justify-content-center align-items-center d-flex" style="width: 60px; height: 60px;">2</div>
+                        <div class="bg-primary fw-bold fs-4 rounded-circle justify-content-center align-items-center d-flex" style="width: 60px; height: 60px;">3</div>
+                        <div class="bg-white text-primary fw-bold fs-4 rounded-circle justify-content-center align-items-center d-flex" style="width: 60px; height: 60px;">4</div>
+                        <div class="bg-white text-primary fw-bold fs-4 rounded-circle justify-content-center align-items-center d-flex" style="width: 60px; height: 60px;">5</div>
                     </div>
-
                 </div>
-                <div class="w-100 d-flex justify-content-center align-items-center ">
-                    <div class="w-75 text-white">
-                        <div class="bg-primary justify-content-center m-2 pt-2 px-3 rounded-4">
-                            <h5>Pilih Layanan</h5>
-                            <p class="pb-1">Pilih jenis layanan yang kamu butuhkan—ambulans, kursi roda, atau khitanan
-                                massal.</p>
+
+                <div class="w-100 d-flex justify-content-center align-items-center">
+                    <div class="w-100 text-white" style="max-width: 750px;">
+                        <div class="bg-primary justify-content-center m-2 p-3 rounded-4">
+                            <h5><span class="d-md-none">1. </span>Pilih Layanan</h5>
+                            <p class="mb-0 small">Pilih jenis layanan yang kamu butuhkan—ambulans, kursi roda, atau khitanan massal.</p>
                         </div>
-                        <div class="bg-primary justify-content-center m-2 pt-2 px-3 rounded-4">
-                            <h5>Isi Formulir</h5>
-                            <p class="pb-1">Lengkapi data diri dan detail permohonan agar tim kami bisa memproses dengan
-                                tepat.</p>
+                        <div class="bg-primary justify-content-center m-2 p-3 rounded-4">
+                            <h5><span class="d-md-none">2. </span>Isi Formulir</h5>
+                            <p class="mb-0 small">Lengkapi data diri dan detail permohonan agar tim kami bisa memproses dengan tepat.</p>
                         </div>
-                        <div class="bg-primary justify-content-center m-2 pt-2 px-3 rounded-4">
-                            <h5>Verifikasi</h5>
-                            <p class="pb-1">Tim kami akan mengecek ketersediaan jadwal, kelengkapan data, dan memastikan
-                                permohonan
-                                sesuai.</p>
+                        <div class="bg-primary justify-content-center m-2 p-3 rounded-4">
+                            <h5><span class="d-md-none">3. </span>Verifikasi</h5>
+                            <p class="mb-0 small">Tim kami akan mengecek ketersediaan jadwal, kelengkapan data, dan memastikan permohonan sesuai.</p>
                         </div>
-                        <div class="bg-primary justify-content-center m-2 pt-2 px-3 rounded-4">
-                            <h5>Konfirmasi</h5>
-                            <p class="pb-1">Kamu akan menerima informasi lanjutan terkait persetujuan layanan, jadwal,
-                                atau nomor
-                                pendaftaran.</p>
+                        <div class="bg-primary justify-content-center m-2 p-3 rounded-4">
+                            <h5><span class="d-md-none">4. </span>Konfirmasi</h5>
+                            <p class="mb-0 small">Kamu akan menerima informasi lanjutan terkait persetujuan layanan, jadwal, atau nomor pendaftaran.</p>
                         </div>
-                        <div class="bg-primary justify-content-center m-2 pt-2 px-3 rounded-4">
-                            <h5>Selesai</h5>
-                            <p class="pb-1">Permohonan selesai diproses—tinggal menunggu layanan dijalankan sesuai
-                                jadwal yang
-                                ditentukan.</p>
+                        <div class="bg-primary justify-content-center m-2 p-3 rounded-4">
+                            <h5><span class="d-md-none">5. </span>Selesai</h5>
+                            <p class="mb-0 small">Permohonan selesai diproses—tinggal menunggu layanan dijalankan sesuai jadwal yang ditentukan.</p>
                         </div>
                     </div>
                 </div>
             </div>
-
         </section>
-        <!-- FLOW END -->
-
-        <!-- FOOTER START -->
-        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3  border-top">
-            <div class="col-md-4 d-flex align-items-center"> <a href="/"
-                    class="mb-3 me-2 mb-md-0 text-body-secondary text-decoration-none lh-1" aria-label="Bootstrap">
-                </a> <span class="mb-3 mb-md-0 text-primary fw-semibold">© 2025 Baitulmal Tazkia, Inc</span>
+        <footer class="container d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+            <div class="col-12 col-md-4 text-center text-md-start mb-2 mb-md-0"> 
+                <span class="text-primary fw-semibold">© 2026 Baitulmal Tazkia, Inc</span>
             </div>
-            <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
-                <li class="ms-3"><a class="text-secondary" href="#" aria-label="Instagram"><svg class="bi" width="24"
-                            height="24" aria-hidden="true">
-                            <use xlink:href="#instagram"></use>
-                        </svg></a></li>
-                <li class="ms-3"><a class="text-body-secondary" href="#" aria-label="Facebook"><svg class="bi"
-                            width="24" height="24">
-                            <use xlink:href="#facebook"></use>
-                        </svg></a></li>
+            <ul class="nav col-12 col-md-4 justify-content-center justify-content-md-end list-unstyled d-flex">
+                <li class="ms-3"><a class="text-secondary" href="#" aria-label="Instagram"><svg class="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg></a></li>
+                <li class="ms-3"><a class="text-body-secondary" href="#" aria-label="Facebook"><svg class="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg></a></li>
             </ul>
         </footer>
-        <!-- FOOTER END -->
-    </main>
+        </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+
 
     <script type="module" src="../assets/js/main.js"></script>
 

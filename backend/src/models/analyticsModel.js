@@ -2,7 +2,7 @@
 
 const db = require("../config/database");
 
-// ── Ringkasan bulan ini ────────────────────────────────────────────────────
+// Ringkasan bulan ini 
 const getSummary = async () => {
     const [[summary]] = await db.query(`
         SELECT
@@ -21,8 +21,8 @@ const getSummary = async () => {
     return summary;
 };
 
-// ── Tren bulanan per layanan (6 bulan terakhir) ────────────────────────────
-const getMonthlyTrend = async () => {
+// Tren bulanan per layanan (6 bulan terakhir)
+ const getMonthlyTrend = async () => {
     const [rows] = await db.query(`
         SELECT
             DATE_FORMAT(sr.created_at, '%Y-%m') AS month,
@@ -37,7 +37,7 @@ const getMonthlyTrend = async () => {
     return rows;
 };
 
-// ── Distribusi per layanan (all time) ─────────────────────────────────────
+// Distribusi per layanan (all time) 
 const getServiceDistribution = async () => {
     const [rows] = await db.query(`
         SELECT
@@ -50,7 +50,7 @@ const getServiceDistribution = async () => {
     return rows;
 };
 
-// ── 5 permintaan terbaru ───────────────────────────────────────────────────
+// 5 permintaan terbaru 
 const getRecentRequests = async () => {
     const [rows] = await db.query(`
         SELECT
@@ -69,7 +69,7 @@ const getRecentRequests = async () => {
     return rows;
 };
 
-// ── Distribusi status per layanan ──────────────────────────────────────────
+// Distribusi status per layanan 
 const getStatusByService = async () => {
     const [rows] = await db.query(`
         SELECT

@@ -12,21 +12,26 @@ export async function getAllAmbulances() {
 
 export async function addAmbulance(data) {
     const res = await fetch(BASE_URL, {
-        method: "POST", headers: jsonHeaders(), body: JSON.stringify(data)
+        method: "POST", 
+        headers: jsonHeaders(), 
+        body: JSON.stringify(data)
     });
     return res.json();
 }
 
 export async function updateAmbulance(id, data) {
     const res = await fetch(`${BASE_URL}/${id}`, {
-        method: "PUT", headers: jsonHeaders(), body: JSON.stringify(data)
+        method: "PUT",
+        headers: jsonHeaders(),
+        body: JSON.stringify(data)
     });
     return res.json();
 }
 
 export async function deleteAmbulance(id) {
     const res = await fetch(`${BASE_URL}/${id}`, {
-        method: "DELETE", headers: authHeader()
+        method: "DELETE", 
+        headers: authHeader()
     });
     return res.json();
 }

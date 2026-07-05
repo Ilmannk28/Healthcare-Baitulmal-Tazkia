@@ -1,6 +1,3 @@
-// assets/js/forms/khitanForm.js
-// Membaca khitan_event_id dari URL (?id=1) dan submit form pendaftaran khitan
-
 import { createKhitanRequest } from "../api/khitanApi.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -12,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    const params        = new URLSearchParams(window.location.search);
+    const params = new URLSearchParams(window.location.search);
     const khitanEventId = params.get("id");
 
     if (!khitanEventId) {
