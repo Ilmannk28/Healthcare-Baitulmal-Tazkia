@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
@@ -10,152 +10,220 @@
     <link rel="stylesheet" href="../../assets/vendor/bootstrap-icons/font/bootstrap-icons.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
-    <!-- Geocoder (search box) -->
+    <!-- Geocoder (Search Box) -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
 
-    <!-- Routing (opsional, tapi keren) -->
+    <!-- Routing -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.css" />
 
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .map-trigger-card {
+            cursor: pointer;
+            transition: transform 0.2s ease, border-color 0.2s ease;
+        }
+
+        .map-trigger-card:hover {
+            transform: translateY(-2px);
+            border-color: #f59e0b !important;
+        }
+    </style>
 </head>
 
 <body>
-
     <!-- Navbar Start -->
-    <header id="header"
-        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 px-4 border-bottom bg-white shadow-sm">
-        <div class="col-md-auto mb-2 mb-md-0">
-            <a href="../index.html">
-                <img src="../../assets/img/logo.png" alt="logo baitulmal tazkia" class="w-25">
-            </a>
-        </div>
-        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="../dashboard/layananKesehatan.html" class="nav-link px-2 fw-medium link-secondary">Layanan Kesehatan</a></li>
-            <li><a href="../dashboard/statusPemesanan.html" class="nav-link px-2 fw-medium">Status Pemesanan</a></li>
-            <li><a href="#" class="nav-link px-2 fw-medium">Tentang Kami</a></li>
-        </ul>
-        <div class="col-md-3 text-end">
-            <a href="login.html"> <button type="button" class="btn btn-outline-primary me-2"> Login</button></a>
-            <a href="register.html"><button type="button" class="btn btn-outline-secondary">Sign-up</button></a>
-        </div>
+    <header id="header" class="border-bottom bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md py-3 px-4">
+            <div class="container-fluid px-0">
+                <!-- 1. Logo -->
+                <a href="../index.html" class="navbar-brand me-0 col-auto col-md-2">
+                    <img src="../../assets/img/logo.png" alt="Logo Baitulmal Tazkia" class="img-fluid"
+                        style="max-height: 45px;">
+                </a>
+
+                <!-- 2. Burger Button (Mobile/Tablet) -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMain"
+                    aria-controls="navbarMain" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- 3. Collapsible Container -->
+                <div class="collapse navbar-collapse justify-content-md-between mt-3 mt-md-0" id="navbarMain">
+
+                    <!-- Nav Links -->
+                    <ul class="nav flex-column flex-md-row col-md-auto mb-3 mb-md-0 text-start ms-md-4">
+                        <li class="py-1 py-md-0">
+                            <a href="../dashboard/layananKesehatan.html"
+                                class="nav-link px-0 px-md-3 fw-bold link-secondary">Layanan Kesehatan</a>
+                        </li>
+                        <li class="py-1 py-md-0">
+                            <a href="../dashboard/statusPemesanan.html"
+                                class="nav-link px-0 px-md-3 fw-medium link-dark">Status Pemesanan</a>
+                        </li>
+                        <li class="py-1 py-md-0">
+                            <a href="../about.html" class="nav-link px-0 px-md-3 fw-medium link-dark">Tentang Kami</a>
+                        </li>
+                    </ul>
+
+                    <!-- Divider Khusus Mobile -->
+                    <hr class="d-md-none text-muted my-2">
+
+                    <!-- Auth Container -->
+                    <div class="col-12 col-md-3 d-flex flex-column flex-md-row align-items-stretch align-items-md-center justify-content-end gap-2"
+                        id="authNavButtons">
+                        <div class="d-flex align-items-center justify-content-between justify-content-md-end gap-3 w-100">
+                            <span class="fw-semibold text-dark mb-0">Halo, <span id="userName">Rahayu</span>!</span>
+                            <button type="button" class="btn btn-outline-danger btn-sm" id="btnLogout">Logout</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </nav>
     </header>
     <!-- Navbar End -->
 
-
     <!-- Main Start -->
     <main>
-        <div class="container pt-3 mb-5">
+        <div class="container py-4 my-2 my-md-4">
+            <div class="row justify-content-center">
+                <div class="col-12 col-lg-10 col-xl-9">
 
-            <h1 class="text-center text-primary fw-semibold mb-3">Form Peminjaman Kursi Roda </h1>
+                    <h1 class="text-center text-primary fw-bold mb-4 fs-3 fs-md-2">Form Peminjaman Kursi Roda</h1>
 
-            <form id="serviceForm" class="bg-primary form-control p-4 text-white">
-                <input type="hidden" name="wheelchair_id" value="">
-                <div class="row mb-3">
-                    <div class="col-6">
-                        <label for="patient_name" class="form-label small fw-semibold">Nama Pasien</label>
-                        <input type="text" name="patient_name" class="form-control form-control-sm" id="nama_pasien"
-                            placeholder="name@example.com">
-                    </div>
-                    <div class="col-6">
-                        <label for="phone" class="form-label small fw-semibold">Nomor yang dapat
-                            dihubungi:</label>
-                        <input type="tel" name="phone" class="form-control form-control-sm" id="phone"
-                            placeholder="Masukan Nomor anda">
-                    </div>
-                </div>
-                <div class="row mb-3">
-                    <div class="col-6">
-                        <label for="gender" class="form-label small fw-semibold">Jenis Kelamin</label>
-                        <select id="gender" name="gender" class="form-select form-select-sm" aria-label="Small select example">
-                            <option value="" selected>-- Pilih Jenis Kelamin --</option>
-                            <option value="male">Laki-laki</option>
-                            <option value="female">Perempuan</option>
-                        </select>
-                    </div>
-                    <div class="col-6">
-                        <label for="birth_date" class="form-label small fw-semibold">Tanggal Lahir</label>
-                        <input type="date" class="form-control form-control-sm" name="birth_date" id="tanggal_lahir"
-                            placeholder="Masukan email anda">
-                    </div>
-                </div>
-                <div class="row mb-3 align-items-start">
-                    <!-- Bagian Alamat -->
-                    <div class="col-10">
-                        <label for="address" class="form-label small fw-semibold text-white">Alamat Lengkap</label>
-                        <textarea class="form-control" id="address" name="address" rows="3"
-                            placeholder="Masukkan alamat lengkap..."></textarea>
-                    </div>
+                    <form id="serviceForm" class="bg-primary rounded-4 p-3 p-sm-4 p-md-5 text-white shadow"
+                        enctype="multipart/form-data">
+                        <input type="hidden" name="wheelchair_id" value="">
 
-                    <!-- Bagian Pilih Lokasi -->
-                    <div class="col-2 text-center">
-                        <label class="form-label small fw-semibold text-white d-block">Pilih Lokasi</label>
-                        <a href="#" class="d-inline-block bg-white px-4 rounded" data-bs-toggle="modal"
-                            data-bs-target="#mapsModal">
-                            <img src="../../assets/img/maps.png" class="img-fluid rounded shadow-sm" alt="Pilih Lokasi"
-                                style="max-height: 85px;">
-                        </a>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="patient_condition" class="form-label small fw-semibold text-white">Kondisi
-                        Pasien</label>
-                    <textarea class="form-control" id="patient_condition" name="patient_condition" rows="3"
-                        placeholder="Jelaskan kondisi pasien"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label for="borrow_date" class="form-label small fw-semibold">Tanggal Pinjam</label>
-                    <input type="date" class="form-control form-control-sm" name="borrow_date" id="borrow_date">
-                </div>
-                <div class="row mb-3">
-                    <div class="col-4">
-                        <label for="ktp" class="form-label small fw-semibold">KTP</label>
-                        <input name="ktp" class="form-control form-control-sm" id="ktp" type="file">
-                    </div>
-                    <div class="col-4">
-                        <label for="kk" class="form-label small fw-semibold">Kartu Keluarga</label>
-                        <input name="kk" class="form-control form-control-sm" id="kk" type="file">
-                    </div>
-                    <div class="col-4">
-                        <label for="sktm" class="form-label small fw-semibold">SKTM</label>
-                        <input name="sktm" class="form-control form-control-sm" id="sktm" type="file">
-                    </div>
-
-                </div>
-                <div class="row pt-3">
-                    <div class="col-4"></div>
-                    <div class="col-4"></div>
-                    <div class="col-4">
-                        <button type="submit" class="btn btn-secondary w-100 fw-semibold mb-4">Submit</button>
-                    </div>
-                </div>
-            </form>
-
-            <!-- Modal Maps Start -->
-            <div class="modal fade" id="mapsModal" tabindex="-1" aria-labelledby="mapsModalLabel" data-bs-focus="false"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="mapsModalLabel">Pilih Lokasi Alamat</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Kontainer Peta -->
-                            <div id="map" style="height: 400px; width: 100%;"></div>
-                            <div class="mt-2">
-                                <small class="text-muted">Klik pada peta untuk memilih lokasi atau geser marker.</small>
+                        <!-- Row 1: Nama Pasien & Nomor Telepon -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-12 col-md-6">
+                                <label for="nama_pasien" class="form-label small fw-semibold">Nama Pasien</label>
+                                <input type="text" class="form-control" id="nama_pasien" name="patient_name"
+                                    placeholder="Masukkan nama lengkap pasien" required>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="phone" class="form-label small fw-semibold">Nomor Telepon / WhatsApp</label>
+                                <input type="tel" class="form-control" id="phone" name="phone"
+                                    placeholder="Contoh: 08123456789" required>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Simpan Lokasi</button>
+
+                        <!-- Row 2: Jenis Kelamin & Tanggal Lahir -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-12 col-md-6">
+                                <label for="gender" class="form-label small fw-semibold">Jenis Kelamin Pasien</label>
+                                <select id="gender" name="gender" class="form-select" required>
+                                    <option value="" selected disabled>-- Pilih Jenis Kelamin --</option>
+                                    <option value="male">Laki-laki</option>
+                                    <option value="female">Perempuan</option>
+                                </select>
+                            </div>
+                            <div class="col-12 col-md-6">
+                                <label for="tanggal_lahir" class="form-label small fw-semibold">Tanggal Lahir Pasien</label>
+                                <input type="date" class="form-control" id="tanggal_lahir" name="birth_date" required>
+                            </div>
+                        </div>
+
+                        <!-- Row 3: Alamat Lengkap & Map Trigger -->
+                        <div class="row g-3 mb-3">
+                            <!-- Alamat Lengkap -->
+                            <div class="col-12 col-md-8 col-lg-9">
+                                <label for="address" class="form-label small fw-semibold">Alamat Domisili Lengkap</label>
+                                <textarea class="form-control" id="address" name="address" rows="5"
+                                    placeholder="Masukkan alamat pengiriman kursi roda atau pilih titik lokasi..."
+                                    required></textarea>
+                            </div>
+
+                            <!-- Tombol Peta -->
+                            <div class="col-12 col-md-4 col-lg-3 d-flex flex-column">
+                                <label class="form-label small fw-semibold d-block">Pilih Pin Point</label>
+                                <div class="bg-white rounded-3 p-3 text-center text-dark map-trigger-card border shadow-sm flex-grow-1 d-flex flex-column align-items-center justify-content-center"
+                                    data-bs-toggle="modal" data-bs-target="#mapsModal" id="btnOpenMap"
+                                    style="min-height: 100px;">
+                                    <i class="bi bi-geo-alt-fill text-danger fs-3 mb-1"></i>
+                                    <span class="fw-semibold small text-primary">Buka Peta</span>
+                                    <small class="text-muted fs-8 d-block">Tentukan lokasi domisili</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Row 4: Kondisi Pasien & Tanggal Pinjam -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-12 col-md-12">
+                                <label for="patient_condition" class="form-label small fw-semibold">Kondisi Pasien</label>
+                                <textarea class="form-control" id="patient_condition" name="patient_condition" rows="2"
+                                    placeholder="Jelaskan secara singkat kondisi kesehatan atau kebutuhan pasien..." required></textarea>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <label for="borrow_date" class="form-label small fw-semibold">Rencana Tanggal Pinjam</label>
+                                <input type="date" class="form-control" id="borrow_date" name="borrow_date" required>
+                            </div>
+                        </div>
+
+                        <!-- Row 5: Upload Berkas -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-12 col-md-12">
+                                <label for="ktp" class="form-label small fw-semibold">Foto KTP Pasien / Pemohon</label>
+                                <input class="form-control" id="ktp" name="ktp" type="file" accept="image/*,.pdf" required>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <label for="kk" class="form-label small fw-semibold">Foto Kartu Keluarga (KK)</label>
+                                <input class="form-control" id="kk" name="kk" type="file" accept="image/*,.pdf" required>
+                            </div>
+                            <div class="col-12 col-md-12">
+                                <label for="sktm" class="form-label small fw-semibold">Surat Keterangan Tidak Mampu (SKTM)</label>
+                                <input class="form-control" id="sktm" name="sktm" type="file" accept="image/*,.pdf" required>
+                            </div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="mt-4">
+                            <button type="submit"
+                                class="btn btn-secondary btn-lg fw-bold text-primary w-100 shadow-sm py-2">
+                                Ajukan Peminjaman Kursi Roda
+                            </button>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+
+            <!-- Modal Maps Start -->
+            <div class="modal fade" id="mapsModal" tabindex="-1" aria-labelledby="mapsModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary text-white">
+                            <h5 class="modal-title fs-6" id="mapsModalLabel">
+                                <i class="bi bi-map me-2"></i>Pilih Lokasi Domisili
+                            </h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body p-0 position-relative">
+                            <!-- Kontainer Peta -->
+                            <div id="map" style="height: 380px; width: 100%;"></div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between bg-light">
+                            <small class="text-muted">
+                                <i class="bi bi-info-circle me-1"></i>Klik lokasi pada peta atau geser pin marker.
+                            </small>
+                            <button type="button" class="btn btn-primary btn-sm px-4 fw-semibold"
+                                data-bs-dismiss="modal">
+                                Simpan Lokasi
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- Modal Maps end -->
+            <!-- Modal Maps End -->
+
         </div>
     </main>
     <!-- Main End -->
-
 
     <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
@@ -163,10 +231,10 @@
     <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.min.js"></script>
 
     <script>
-        let map, marker, routingControl;
-        const alamatTextarea = document.getElementById('alamat');
+        let map, marker;
+        const alamatTextarea = document.getElementById('address'); // Fixed ID match with textarea
         const mapsModal = document.getElementById('mapsModal');
-        const openMapBtn = document.querySelector('[data-bs-target="#mapsModal"]');
+        const openMapBtn = document.getElementById('btnOpenMap');
 
         mapsModal.addEventListener('shown.bs.modal', () => {
             const initialCoords = [-6.568144, 106.8440649]; // lat, lng
@@ -174,18 +242,18 @@
             if (!map) {
                 // INIT MAP
                 map = L.map('map', {
-                    zoomControl: false // kita pindahin posisi
+                    zoomControl: false
                 }).setView(initialCoords, 13);
 
-                // 🔥 TILE MODERN (mirip Google Maps)
+                // TILE MAP
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; OpenStreetMap & CartoDB'
+                    attribution: '&copy; OpenStreetMap'
                 }).addTo(map);
 
-                // Pindahin zoom control ke kanan bawah (lebih modern)
+                // Zoom control di kanan bawah
                 L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-                // 🎯 CUSTOM MARKER (lebih modern)
+                // Custom Marker Icon
                 const customIcon = L.icon({
                     iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
                     iconSize: [36, 36],
@@ -197,21 +265,21 @@
                     icon: customIcon
                 }).addTo(map);
 
-                // DRAG MARKER
+                // Drag Marker
                 marker.on('dragend', () => {
                     const pos = marker.getLatLng();
                     reverseGeocode(pos.lat, pos.lng);
                 });
 
-                // KLIK MAP
+                // Klik Map
                 map.on('click', (e) => {
                     const { lat, lng } = e.latlng;
                     marker.setLatLng([lat, lng]);
                     reverseGeocode(lat, lng);
                 });
 
-                // SEARCH BOX (GEOCODER)
-                const geocoder = L.Control.geocoder({
+                // Search Box Geocoder
+                L.Control.geocoder({
                     defaultMarkGeocode: false
                 })
                     .on('markgeocode', function (e) {
@@ -222,7 +290,7 @@
                     })
                     .addTo(map);
 
-                // AUTO DETECT LOKASI USER
+                // Auto Detect User Location
                 map.locate({ setView: true, maxZoom: 16 });
 
                 map.on('locationfound', function (e) {
@@ -230,13 +298,12 @@
                     reverseGeocode(e.latitude, e.longitude);
                 });
 
-
             } else {
                 map.invalidateSize();
             }
         });
 
-        // 🧠 FIX ARIA WARNING (Bootstrap modal)
+        // Accessibility fix
         mapsModal.addEventListener('hidden.bs.modal', () => {
             setTimeout(() => {
                 if (document.activeElement) document.activeElement.blur();
@@ -244,7 +311,7 @@
             }, 50);
         });
 
-        // 🌍 REVERSE GEOCODING (Nominatim - gratis)
+        // Reverse Geocoding
         function reverseGeocode(lat, lng) {
             fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
                 .then(res => res.json())
