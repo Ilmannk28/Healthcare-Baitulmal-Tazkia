@@ -28,13 +28,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const data = await res.json();
 
             if (data.success) {
-                // ── Simpan semua yang diperlukan ke localStorage ────────────
+                // Simpan semua yang diperlukan ke localStorage 
                 localStorage.setItem("token",    data.token);
                 localStorage.setItem("userId",   data.user.id);
                 localStorage.setItem("userName", data.user.name);
                 localStorage.setItem("userRole", data.user.role);   
 
-                // ── Redirect berdasarkan role ───────────────────────────────
+                // Redirect berdasarkan role 
                 if (data.user.role === "admin") {
                     window.location.href = "dashboard/layananKesehatan.html";
                 } else {

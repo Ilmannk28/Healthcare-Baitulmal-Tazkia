@@ -1,10 +1,9 @@
-// backend/src/middlewares/authMiddleware.js
 const jwt = require("jsonwebtoken");
 
 const verifyToken = (req, res, next) => {
   // Ambil token dari header request frontend
   const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1]; // Format: "Bearer <token>"
+  const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
     return res.status(401).json({
@@ -16,7 +15,9 @@ const verifyToken = (req, res, next) => {
   try {
     // Verifikasi menggunakan JWT_SECRET dari .env
     const verified = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = verified; // Simpan data user (id, role) ke object req
+
+    // Simpan data user (id, role) ke object req
+    req.user = verified;
     next();
   } catch (error) {
     return res.status(403).json({

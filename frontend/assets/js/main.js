@@ -1,35 +1,35 @@
 // assets/js/main.js
 
-// ── PAGES ────────────────────────────────────────────────────────────────────
+//  PAGES 
 import { ambulancePage } from "./pages/ambulance.js";
 import { wheelchairPage } from "./pages/wheelchair.js";
 import { khitanPage } from "./pages/khitan.js";
 
-// ── API UNIT (CRUD) ───────────────────────────────────────────────────────────
+//  API UNIT (CRUD) 
 import { getAllAmbulances, addAmbulance, updateAmbulance, deleteAmbulance } from "./api/ambulanceApi.js";
 import { getAllWheelchairs, addWheelchair, updateWheelchair, deleteWheelchair } from "./api/wheelchairApi.js";
 import { getAllKhitanEvents, addKhitanEvent, updateKhitanEvent, deleteKhitanEvent } from "./api/khitanApi.js";
 
-// ── API REQUEST ───────────────────────────────────────────────────────────────
+//  API REQUEST 
 import { getRequests, adminUpdateStatusRequest, updateRequestByDetail } from "./api/requestApi.js";
 import { renderNavbar } from "./utils/utils.js";
 
-// ── STATE ────────────────────────────────────────────────────────────────────
+//  STATE 
 const app = document.getElementById("app");
 const title = document.getElementById("title_dashboard");
 
 let localRequestsData = [];
-let currentPageData = []; // data unit yang sedang aktif (untuk lookup saat edit)
+let currentPageData = []; 
 let currentRole = "user";
 
-// ── ROUTES ───────────────────────────────────────────────────────────────────
+//  ROUTES 
 const routes = {
     ambulans: { render: renderAmbulancePage, title: "Ambulans" },
     kursi: { render: renderwheelchairPage, title: "Kursi Roda" },
     khitan: { render: renderkhitanPage, title: "Khitanan Massal" },
 };
 
-// ── RENDER HALAMAN LAYANAN ────────────────────────────────────────────────────
+//  RENDER HALAMAN LAYANAN 
 async function renderAmbulancePage() {
     const res = await getAllAmbulances();
     const data = res.data || res;
@@ -51,7 +51,7 @@ async function renderkhitanPage() {
     if (app) app.innerHTML = khitanPage(data, currentRole);
 }
 
-// ── LOAD PAGE (SPA ROUTER) ────────────────────────────────────────────────────
+//  LOAD PAGE (SPA ROUTER) 
 window.loadPage = async function (page) {
     const selectedRoute = routes[page];
     if (!selectedRoute) return;
@@ -65,7 +65,7 @@ window.loadPage = async function (page) {
     if (title) title.innerHTML = `Daftar Layanan ${selectedRoute.title}`;
 };
 
-// ── ENTRY POINT ───────────────────────────────────────────────────────────────
+//  ENTRY POINT 
 document.addEventListener("DOMContentLoaded", () => {
     renderNavbar()
     const isAtDashboard = window.location.pathname.includes("layananKesehatan.html");
@@ -81,20 +81,21 @@ document.addEventListener("DOMContentLoaded", () => {
     currentRole = localStorage.getItem("userRole") || "user";
 
 
-    // ── EVENT DELEGATION UTAMA (tombol di dalam #app) ─────────────────────────
+    //  EVENT DELEGATION UTAMA (tombol di dalam #app) 
     if (app) {
         app.addEventListener("click", async (e) => {
 
-            // ── TAMBAH UNIT (admin) ───────────────────────────────────────────
+            //  TAMBAH UNIT (admin) 
             if (e.target.classList.contains("btn-tambah-unit")) {
                 const type = e.target.dataset.type;
                 bukaModalUnit(type, null);
             }
 
-            // ── DETAIL / EDIT UNIT (admin) ────────────────────────────────────
+            //  DETAIL / EDIT UNIT (admin) 
             if (e.target.classList.contains("btn-detail-unit")) {
                 const id = e.target.dataset.id;
                 const type = e.target.dataset.type;
+                
                 // Cek keduanya: string "1" == number 1 dan number 1 == number 1
                 const unitData = currentPageData.find(u => String(u.id) === String(id));
                 if (!unitData) {
@@ -105,7 +106,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 bukaModalUnit(type, unitData);
             }
 
-            // ── HAPUS UNIT (admin) ────────────────────────────────────────────
+            //  HAPUS UNIT (admin) 
             if (e.target.classList.contains("btn-delete-unit")) {
                 const id = e.target.dataset.id;
                 const type = e.target.dataset.type;
@@ -114,7 +115,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 await handleDeleteUnit(type, id);
             }
 
-            // ── PESAN / DAFTAR (user) ─────────────────────────────────────────
+            //  PESAN / DAFTAR (user) 
             if (e.target.classList.contains("btn-order")) {
                 const id = e.target.dataset.id;
                 const type = e.target.dataset.type;
@@ -123,7 +124,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ── INIT ───────────────────────────────────────────────────────────────────
+    //  INIT 
     window.loadPage("ambulans");
 });
 
@@ -248,7 +249,7 @@ function buildUnitForm(type, d = {}) {
     return "";
 }
 
-// ── SUBMIT FORM MODAL (add-unit / edit-unit) ───────────────────────────────────
+//  SUBMIT FORM MODAL (add-unit / edit-unit) 
 document.addEventListener("DOMContentLoaded", () => {
     
 
@@ -337,4 +338,3 @@ function bukaModalPesan(type, unitId) {
     // Kirim unit ID lewat URL query param → ?id=1
     window.location.href = `${targetPage}?id=${unitId}`;
 }
-// ============================================================

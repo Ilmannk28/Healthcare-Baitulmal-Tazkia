@@ -1,19 +1,17 @@
-// assets/js/forms/ambulanceForm.js
-// Membaca ambulance_id dari URL (?id=1) dan submit form pemesanan ambulans
-
 import { createAmbulanceRequest } from "../api/ambulanceApi.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    // ── 1. Cek login ────────────────────────────────────────────────────────
+    // 1. Cek login 
     const token = localStorage.getItem("token");
+
     if (!token) {
         alert("Anda harus login terlebih dahulu.");
         window.location.href = "../login.html";
         return;
     }
 
-    // ── 2. Baca ambulance_id dari URL ───────────────────────────────────────
+    // 2. Baca ambulance_id dari URL 
     const params = new URLSearchParams(window.location.search);
     const ambulanceId = params.get("id");
 
@@ -23,14 +21,14 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // ── 3. Isi hidden field ambulance_id ────────────────────────────────────
+    // 3. Isi hidden field ambulance_id 
     const hiddenInput = document.querySelector('input[name="ambulance_id"]');
     if (hiddenInput) hiddenInput.value = ambulanceId;
 
-    // ── 4. Render navbar (nama user + logout) ───────────────────────────────
+    // 4. Render navbar (nama user + logout) 
     renderNavbar();
 
-    // ── 5. Handle submit form ───────────────────────────────────────────────
+    // 5. Handle submit form     
     const form = document.getElementById("serviceForm");
     if (!form) return;
 
@@ -43,7 +41,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const formData = new FormData(form);
-            // Pastikan ambulance_id ikut terkirim
+            // memastikan ambulance_id ikut terkirim
             formData.set("ambulance_id", ambulanceId);
 
             const result = await createAmbulanceRequest(formData);

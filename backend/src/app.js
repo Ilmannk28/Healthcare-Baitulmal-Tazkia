@@ -38,6 +38,34 @@ app.get('/', (req, res) => {
 const PORT =
    process.env.PORT || 3000;
 
+
+   //  Error-handling middleware 
+app.use((err, req, res, next) => {
+    console.error(err);
+
+    // Error dari multer (mis. ukuran file melebihi batas)
+    if (err.name === "MulterError") {
+        return res.status(400).json({
+            success: false,
+            message: "Upload gagal: " + err.message
+        });
+    }
+
+    // Error dari fileFilter (format dokumen tidak didukung)
+    if (err.message === "Format tidak didukung.") {
+        return res.status(400).json({
+            success: false,
+            message: "Format file tidak didukung. Gunakan PDF, JPG, JPEG, atau PNG."
+        });
+    }
+
+    // Fallback untuk error tak terduga lainnya
+    return res.status(500).json({
+        success: false,
+        message: err.message || "Terjadi kesalahan pada server."
+    });
+});
+
 app.listen(PORT, () => {
     console.log(`Aplikasi berhasil dijalankan di port ${PORT}...`);
 });

@@ -124,8 +124,12 @@
                         <input class="form-control form-control-sm" name="surat_rujukan" type="file" required>
                     </div>
                 </div>
-                <div class="mt-4">
-                    <button type="submit" class="btn btn-secondary w-100 mb-4">Submit</button>
+                <div class="row mt-4">
+                    <div class="col-6"></div>
+                    <div class="col-6">
+
+                        <button type="submit" class="btn btn-secondary w-100 mb-4">Submit</button>
+                    </div>
                 </div>
             </form>
 
@@ -174,7 +178,7 @@
                     zoomControl: false // kita pindahin posisi
                 }).setView(initialCoords, 13);
 
-                // 🔥 TILE MODERN (mirip Google Maps)
+                // TILE MODERN (mirip Google Maps)
                 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                     attribution: '&copy; OpenStreetMap & CartoDB'
                 }).addTo(map);
@@ -194,20 +198,20 @@
                     icon: customIcon
                 }).addTo(map);
 
-                // 🔁 DRAG MARKER
+                // DRAG MARKER
                 marker.on('dragend', () => {
                     const pos = marker.getLatLng();
                     reverseGeocode(pos.lat, pos.lng);
                 });
 
-                // 🖱️ KLIK MAP
+                // KLIK MAP
                 map.on('click', (e) => {
                     const { lat, lng } = e.latlng;
                     marker.setLatLng([lat, lng]);
                     reverseGeocode(lat, lng);
                 });
 
-                // 🔍 SEARCH BOX (GEOCODER)
+                // SEARCH BOX (GEOCODER)
                 const geocoder = L.Control.geocoder({
                     defaultMarkGeocode: false
                 })
@@ -219,7 +223,7 @@
                     })
                     .addTo(map);
 
-                // 📍 AUTO DETECT LOKASI USER
+                // AUTO DETECT LOKASI USER
                 map.locate({ setView: true, maxZoom: 16 });
 
                 map.on('locationfound', function (e) {
@@ -227,7 +231,7 @@
                     reverseGeocode(e.latitude, e.longitude);
                 });
 
-                // 🚧 OPTIONAL: ROUTING (lokasi user → titik pilih)
+                // OPTIONAL: ROUTING (lokasi user → titik pilih)
                 routingControl = L.Routing.control({
                     waypoints: [
                         L.latLng(initialCoords[0], initialCoords[1]),
@@ -257,7 +261,7 @@
             }
         });
 
-        // 🧠 FIX ARIA WARNING (Bootstrap modal)
+        //  FIX ARIA WARNING (Bootstrap modal)
         mapsModal.addEventListener('hidden.bs.modal', () => {
             setTimeout(() => {
                 if (document.activeElement) document.activeElement.blur();
@@ -265,7 +269,7 @@
             }, 50);
         });
 
-        // 🌍 REVERSE GEOCODING (Nominatim - gratis)
+        //  REVERSE GEOCODING (Nominatim - gratis)
         function reverseGeocode(lat, lng) {
             fetch(`https://nominatim.openstreetmap.org/reverse?format=jsonv2&lat=${lat}&lon=${lng}`)
                 .then(res => res.json())

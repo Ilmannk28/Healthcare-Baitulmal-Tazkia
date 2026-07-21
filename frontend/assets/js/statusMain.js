@@ -3,11 +3,11 @@
 import { getRequests, adminUpdateStatusRequest, updateRequestByDetail, getDocumentsByRequest, uploadDocument } from "./api/requestApi.js";
 import { renderNavbar } from "./utils/utils.js";
 
-// ── STATE ──────────────────────────────────────────────────────────────────
+//  STATE 
 let allRequestsData = [];
 let currentRole = "user";
 
-// ── ENTRY POINT ────────────────────────────────────────────────────────────
+//  ENTRY POINT 
 document.addEventListener("DOMContentLoaded", async () => {
     renderNavbar();
 
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     setupFormEditListener();
 });
 
-// ── LOAD DATA ──────────────────────────────────────────────────────────────
+//  LOAD DATA 
 async function loadRequests() {
     const spinner = document.getElementById("loadingSpinner");
     const errorMsg = document.getElementById("errorMsg");
@@ -49,7 +49,7 @@ async function loadRequests() {
     }
 }
 
-// ── RENDER TABEL ────────────────────────────────────────────────────────────
+//  RENDER TABEL 
 function renderTable(requests) {
     const app = document.getElementById("app");
     if (!requests || requests.length === 0) {
@@ -110,7 +110,7 @@ function buildRow(r) {
         </tr>`;
 }
 
-// ── EVENT DELEGATION ────────────────────────────────────────────────────────
+//  EVENT DELEGATION 
 function setupTableEventListeners() {
     const app = document.getElementById("app");
 
@@ -127,7 +127,7 @@ function setupTableEventListeners() {
     });
 }
 
-// ── MODAL DETAIL ADMIN ──────────────────────────────────────────────────────
+//  MODAL DETAIL ADMIN 
 // Admin bisa lihat detail + dokumen + ubah status via dropdown
 async function bukaModalDetailAdmin(data) {
     const container = document.getElementById("containerDetailModal");
@@ -186,7 +186,7 @@ async function bukaModalDetailAdmin(data) {
     });
 }
 
-// ── MODAL DETAIL USER ───────────────────────────────────────────────────────
+//  MODAL DETAIL USER 
 async function bukaModalDetailUser(data) {
     const container = document.getElementById("containerDetailModal");
     const footer = document.getElementById("modalDetailFooter");
@@ -222,7 +222,7 @@ async function bukaModalDetailUser(data) {
     }
 }
 
-// ── ADMIN UPDATE STATUS ─────────────────────────────────────────────────────
+//  ADMIN UPDATE STATUS 
 async function handleAdminUpdateStatus(id, statusId) {
     try {
         const res = await adminUpdateStatusRequest(id, statusId);
@@ -239,7 +239,7 @@ async function handleAdminUpdateStatus(id, statusId) {
     }
 }
 
-// ── BUILD HTML DETAIL ───────────────────────────────────────────────────────
+//  BUILD HTML DETAIL 
 function buildDetailHTML(data) {
     const tanggal = data.created_at
         ? new Date(data.created_at).toLocaleDateString("id-ID", { day: "2-digit", month: "long", year: "numeric" })
@@ -308,7 +308,7 @@ function field(label, value, colClass = "col-md-6") {
     </div>`;
 }
 
-// ── BUILD HTML DOKUMEN ──────────────────────────────────────────────────────
+//  BUILD HTML DOKUMEN 
 function buildDocsHTML(docs, canUpload) {
     const docTypes = [
         { key: "ktp", label: "KTP" },
@@ -377,7 +377,7 @@ function setupDocUploadListeners(requestId) {
     });
 }
 
-// ── MODAL EDIT USER ─────────────────────────────────────────────────────────
+//  MODAL EDIT USER 
 function bukaModalEdit(requestId, serviceName, data) {
     const containerForm = document.getElementById("containerFormDinamis");
     const formEl = document.getElementById("formEditLayanan");
@@ -463,7 +463,7 @@ function setupFormEditListener() {
     });
 }
 
-// ── FILTER SIDEBAR ──────────────────────────────────────────────────────────
+//  FILTER SIDEBAR 
 function setupSidebarFilter() {
     document.querySelectorAll(".sidebar .nav-link[data-filter]").forEach(link => {
         link.addEventListener("click", (e) => {
