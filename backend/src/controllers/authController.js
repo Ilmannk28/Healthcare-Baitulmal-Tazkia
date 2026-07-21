@@ -8,7 +8,7 @@ const register = async (req, res) => {
       name,
       birth_date,
       gender,
-      email,
+      phone,
       password
     } = req.body;
 
@@ -16,22 +16,23 @@ const register = async (req, res) => {
       !name ||
       !birth_date ||
       !gender ||
-      !email ||
-      !password
+      !phone ||
+      !password 
     ) {
       return res.status(400).json({
         success: false,
-        message: "Semua field wajib diisi"
+        message: "Mohon lengkapi data pendaftaran"
       });
     }
 
+    const checkValue = phone 
     const existingUser =
-      await authModel.findByEmail(email);
+      await authModel.findByIndentifier(checkValue);
 
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: "Email sudah digunakan"
+        message: "Nomor Telepon atau Email sudah terdaftar"
       });
     }
 
@@ -43,7 +44,7 @@ const register = async (req, res) => {
         name,
         birth_date,
         gender,
-        email,
+        phone: phone || null,
         password: hashedPassword
       });
 
@@ -71,17 +72,24 @@ const login = async (req, res) => {
   try {
 
     const {
-      email,
+      identifier,
       password
     } = req.body;
 
+    if (!identifier || !password) {
+      return res.status(400).json({
+        success: false,
+        message: "Nomor Telepon/Email dan Password wajib diisi"
+      });
+    }
+
     const user =
-      await authModel.findByEmail(email);
+      await authModel.findByIndentifier(identifier);
 
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: "Email atau password salah"
+        message: "Nomor Telepon atau password salah"
       });
     }
 
@@ -135,6 +143,6 @@ const login = async (req, res) => {
 };
 
 module.exports = {
-    register,
-    login
+  register,
+  login
 };

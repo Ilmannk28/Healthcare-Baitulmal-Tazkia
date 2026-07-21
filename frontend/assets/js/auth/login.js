@@ -9,10 +9,12 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const email    = form.querySelector('input[name="email"]').value.trim();
-        const password = form.querySelector('input[name="password"]').value;
-        const errEl    = document.getElementById("loginError");
-        const submitBtn = form.querySelector("button[type='submit']");
+        // 1. Ubah selector dari 'email' ke 'identifier' (nomor telepon / email)
+        const identifierInput = form.querySelector('input[name="identifier"]');
+        const identifier      = identifierInput ? identifierInput.value.trim() : "";
+        const password        = form.querySelector('input[name="password"]').value;
+        const errEl           = document.getElementById("loginError");
+        const submitBtn       = form.querySelector("button[type='submit']");
 
         if (errEl) errEl.style.display = "none";
         submitBtn.disabled    = true;
@@ -22,7 +24,8 @@ document.addEventListener("DOMContentLoaded", () => {
             const res = await fetch("http://localhost:3000/api/auth/login", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password })
+                // 2. Kirim payload sebagai 'identifier'
+                body: JSON.stringify({ identifier, password })
             });
 
             const data = await res.json();
@@ -42,10 +45,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             } else {
                 if (errEl) {
-                    errEl.textContent   = data.message || "Email atau password salah.";
+                    errEl.textContent   = data.message || "Nomor telepon/email atau password salah.";
                     errEl.style.display = "block";
                 } else {
-                    alert(data.message || "Email atau password salah.");
+                    alert(data.message || "Nomor telepon/email atau password salah.");
                 }
                 submitBtn.disabled    = false;
                 submitBtn.textContent = "Masuk";

@@ -1,12 +1,12 @@
 // models/authModel.js
 const db = require("../config/database");
 
-const findByEmail = async (email) => {
+const findByIndentifier = async (identifier) => {
 
     const [rows] =
         await db.query(
-            "SELECT * FROM users WHERE email = ?",
-            [email]
+            "SELECT * FROM users WHERE phone = ?",
+            [identifier]
         );
 
     return rows[0];
@@ -22,7 +22,7 @@ const createUser = async (user) => {
                 name,
                 birth_date,
                 gender,
-                email,
+                phone,
                 password
             )
             VALUES (?, ?, ?, ?, ?)
@@ -31,7 +31,7 @@ const createUser = async (user) => {
                 user.name,
                 user.birth_date,
                 user.gender,
-                user.email,
+                user.phone || null,
                 user.password
             ]
         );
@@ -40,6 +40,6 @@ const createUser = async (user) => {
 };
 
 module.exports = {
-    findByEmail,
+    findByIndentifier,
     createUser
 };
